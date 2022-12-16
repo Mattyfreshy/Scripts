@@ -7,6 +7,6 @@ def handle_responses(message) -> str:
         return 'Howdy!'
     
     if p_message == 'roll':
-        return str(random.randint(1,6))
+        return str(random.randint(1,6))    
     
     return 'Message not handled'
