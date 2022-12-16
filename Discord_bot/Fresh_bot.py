@@ -9,7 +9,7 @@ async def on_ready():
     
 @client.event
 async def on_message(message):
-    if message.content.startswith('!animelist'):
+    if message.content.startswith('!test'):
         await message.channel.send('pending')
         
 client.run(os.getenv('DISCORD_TOKEN'))
