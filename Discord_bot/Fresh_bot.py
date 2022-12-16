@@ -3,9 +3,9 @@ import os
 from dotenv import load_dotenv
 
 # Sends message from responses.py based on user message
-async def send_message(message, user_message, is_private):
+async def send_message(message, user_message, is_private, trigger):
     try:
-        response = responses.handle_responses(user_message)
+        response = responses.handle_responses(user_message, trigger)
         await message.author.send(response) if is_private else await message.channel.send(response)
     except Exception as e:
         print(e)
@@ -35,9 +35,12 @@ def run_discord_bot():
         print(f"{username} said: '{user_message}' ({channel})")
         
         # If special character used, trigger bot response
-        if user_message[0] == '!':
+        trigger = '!'
+        if user_message[0] == trigger:
             user_message = user_message[1:]
-            await send_message(message, user_message, is_private=False)
+            await send_message(message, user_message, False, trigger)
+        elif user_message == "help":
+            await message.channel.send("Trigger is '" + trigger + "'" )
           
         # use ! to send private messages to user  
         # if user_message[0] == '!':
