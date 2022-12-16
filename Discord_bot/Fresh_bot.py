@@ -1,7 +1,8 @@
-import discord
+import discord, responses
 import os
-import responses
+from dotenv import load_dotenv
 
+# Sends message from responses.py based on user message
 async def send_message(message, user_message, is_private):
     try:
         response = responses.handle_responses(user_message)
@@ -9,6 +10,7 @@ async def send_message(message, user_message, is_private):
     except Exception as e:
         print(e)
 
+# Run discord bot
 def run_discord_bot():
     intents = discord.Intents.default()
     intents.message_content = True
@@ -20,9 +22,31 @@ def run_discord_bot():
         
     @client.event
     async def on_message(message):
-        if message.content.startswith('!test'):
-            await message.channel.send('pending')
-            
+        # prevent bot from responding to itself
+        if message.author == client.user:
+            return
+        
+        # Get User infos
+        username = str(message.author)
+        user_message = str(message.content)
+        channel = str(message.channel)
+        
+        # Debug data
+        print(f"{username} said: '{user_message}' ({channel})")
+        
+        # If special character used, trigger bot response
+        if user_message[0] == '!':
+            user_message = user_message[1:]
+            await send_message(message, user_message, is_private=False)
+          
+        # use ! to send private messages to user  
+        # if user_message[0] == '!':
+        #     user_message = user_message[1:]
+        #     await send_message(message, user_message, is_private=True)
+        # else:
+        #     await send_message(message, user_message, is_private=False)
+    
+    load_dotenv()     
     client.run(os.getenv('DISCORD_TOKEN'))
     
     
