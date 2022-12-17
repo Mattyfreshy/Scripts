@@ -1,7 +1,9 @@
+import random
 
 # Global Variables
 watched_file = 'anime_watched.txt'
 to_watch_file = 'anime_to_watch.txt'
+watching_file = 'anime_watching.txt'
 
 # Sort txt file based on first char of line
 def sort_txt(file: str):
@@ -22,7 +24,6 @@ def sort_txt(file: str):
             f.write(anime.capitalize())
 
 # Locate and remove 'anime'
-# Return true if successful else false.
 def search_and_remove(file: str, target: str):
     # open file in read mode
     with open(file, 'r+') as f:
@@ -42,17 +43,32 @@ def search_and_remove(file: str, target: str):
                 # write line to file
                 f.write(line)
     
-# Add 'anime' to to_watch_file
-def add_to_watch(anime: str):
-    # open file in read mode
-    with open(to_watch_file, 'a+') as f:
+# Add 'anime' to file
+def add_to_file(file:str, anime: str):
+    # open file in read and append mode
+    with open(file, 'a+') as f:
         f.write('\n' + anime.capitalize() + '\n')
     
-    sort_txt(to_watch_file)
+    sort_txt(file)
             
+# Remove from watched if in list and add to watched file
+def watched(anime:str):
+    add_to_file(watched_file, anime)
+    search_and_remove(to_watch_file, anime)
+        
+# randomizer for choosing a random anime to watch from watched list
+def to_watch_random():
+    with open(to_watch_file, 'r') as f_in:
+        with open(watching_file, 'w') as f_out:
+            watch_lst = f_in.readlines()
+            # get random num within range [0,list length]
+            rand_num = random.randint(0, len(watch_lst)-1)
+            # print output and write to output file
+            print(watch_lst[rand_num])
+            f_out.write(watch_lst[rand_num])
         
 def main():
-    search_and_remove(watched_file, 'test')
+    to_watch_random()
 
 if __name__ == "__main__":
     main()
