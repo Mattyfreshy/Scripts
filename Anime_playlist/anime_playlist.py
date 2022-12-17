@@ -25,13 +25,22 @@ def sort_txt(file: str):
 # Return true if successful else false.
 def search_and_remove(file: str, target: str) -> bool:
     # open file in read mode
-    with open(file, 'r') as f:
-        target = target.capitalize
+    with open(file, 'r+') as f:
+        # capitalize target string
+        target = target.capitalize()
+        # read and store lines into list
+        lines = f.readlines()
+        # move file pointer back to beginning
+        f.seek(0)
+        # truncate file
+        f.truncate()
+        
         # locate line w/ target
-        for line in f:
-            if target == line:
-                # remove target and return true
-                f.write('')
+        for line in lines:
+            # if not target, write line to file
+            if target != line:
+                # write line to file
+                f.write(lines)
                 return True
         return False
     
