@@ -23,7 +23,7 @@ def sort_txt(file: str):
 
 # Locate and remove 'anime'
 # Return true if successful else false.
-def search_and_remove(file: str, target: str) -> bool:
+def search_and_remove(file: str, target: str):
     # open file in read mode
     with open(file, 'r+') as f:
         # capitalize target string
@@ -40,9 +40,7 @@ def search_and_remove(file: str, target: str) -> bool:
             # if not target, write line to file
             if target != line:
                 # write line to file
-                f.write(lines)
-                return True
-        return False
+                f.write(line)
     
 # Add 'anime' to to_watch_file
 def add_to_watch(anime: str):
