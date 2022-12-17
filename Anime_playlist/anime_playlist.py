@@ -3,6 +3,7 @@
 watched_file = 'anime_watched.txt'
 to_watch_file = 'anime_to_watch.txt'
 
+# Sort txt file based on first char of line
 def sort_txt(file: str):
     # open file in mode
     with open(file, 'r+') as f:
@@ -20,14 +21,21 @@ def sort_txt(file: str):
         for anime in lst:
             f.write(anime.capitalize())
 
-def search_txt(file: str, target: str) -> bool:
+# Locate and remove 'anime'
+# Return true if successful else false.
+def search_and_remove(file: str, target: str) -> bool:
     # open file in read mode
     with open(file, 'r') as f:
+        target = target.capitalize
+        # locate line w/ target
         for line in f:
-            if target.lower() == line.lower():
+            if target == line:
+                # remove target and return true
+                f.write('')
                 return True
         return False
     
+# Add 'anime' to to_watch_file
 def add_to_watch(anime: str):
     # open file in read mode
     with open(to_watch_file, 'a+') as f:
@@ -37,8 +45,7 @@ def add_to_watch(anime: str):
             
         
 def main():
-    #sort_txt(to_watch_file)
-    add_to_watch("test")
+    search_and_remove(watched_file, 'test')
 
 if __name__ == "__main__":
     main()
