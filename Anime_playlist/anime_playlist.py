@@ -68,7 +68,7 @@ def to_watch_random():
             f_out.write(watch_lst[rand_num])
         
 def main():
-    add_to_file(to_watch_file, 'Wotakoi')
+    add_to_file(to_watch_file, 'vivy')
 
 if __name__ == "__main__":
     main()
